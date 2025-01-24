@@ -1,0 +1,209 @@
+mysql> create database scm;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> create table servicecentre(centreid varchar(20) primary key, cname varchar(30), address varchar(30), phone varchar(20),email varchar(30),regno varchar(20));
+ERROR 1046 (3D000): No database selected
+mysql> use scm;
+Database changed
+mysql> create table servicecentre(centreid varchar(20) primary key, cname varchar(30), address varchar(30), phone varchar(20),email varchar(30),regno varchar(20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table producttype(producttypeid varchar(20) primary key, typename varchar(20), description varchar(50));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table product(productid varchar(20), pname varchar(20), producttypeid varchar(20),warrantydays varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> alter table product modify productid varchar(20) primary key;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe product;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| productid     | varchar(20) | NO   | PRI | NULL    |       |
+| pname         | varchar(20) | YES  |     | NULL    |       |
+| producttypeid | varchar(20) | YES  |     | NULL    |       |
+| warrantydays  | varchar(20) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+4 rows in set (0.03 sec)
+
+mysql> create table servicetype(serviceid varchar(20) primary key, productid varchar(20), producttypeid varchar(20), sname varchar(20
+), cost double int, daystosolve varchar(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int, daystosolve varchar(20))' at line 1
+mysql> create table servicetype(serviceid varchar(20) primary key, productid varchar(20), producttypeid varchar(20), sname varchar(20), cost decimal, daystosolve varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table customer(customerid varchar(20) primary key, cname varchar(30),address varchar(30),phone varchar(20),email varchar(20), productid(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(20))' at line 1
+mysql> create table customer(customerid varchar(20) primary key, cname varchar(30),address varchar(30),phone varchar(20),email varchar(20), productid varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table staff(staffid varchar(20), sname varchar(20),address varchar(30), phone varchar(20),email varchar (20));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table engineer(engid varchar(20) primary key,ename varchar(20),address varchar(30),phone varchar(20), email varchar(20)
+,producttypeid varchar(20));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> alter table staff modify staffid varchar(20) primary key;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table callregister(callid varchar(20) primary key, callno varchar(20),engid varchar(20),bill decimal, dateofclose varch
+ar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table callregister;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table callregister(callid varchar(20) primary key,callno varchar(20),productid varchar(20),serviceid varchar(20),dateofcall varchar(20),solvedate varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table callclosing(callid varchar(20), callno varchar(20), engid varchar(20), bill decimal, dateofclose varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table feedback(callno varchar(20),callid varchar(20),engid varchar(20),rating varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_scm |
++---------------+
+| callclosing   |
+| callregister  |
+| customer      |
+| engineer      |
+| feedback      |
+| product       |
+| producttype   |
+| servicecentre |
+| servicetype   |
+| staff         |
++---------------+
+10 rows in set (0.02 sec)
+
+
+mysql> describe callclosing;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| callid      | varchar(20)   | YES  |     | NULL    |       |
+| callno      | varchar(20)   | YES  |     | NULL    |       |
+| engid       | varchar(20)   | YES  |     | NULL    |       |
+| bill        | decimal(10,0) | YES  |     | NULL    |       |
+| dateofclose | varchar(20)   | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> describe callregister;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| callid     | varchar(20) | NO   | PRI | NULL    |       |
+| callno     | varchar(20) | YES  |     | NULL    |       |
+| productid  | varchar(20) | YES  |     | NULL    |       |
+| serviceid  | varchar(20) | YES  |     | NULL    |       |
+| dateofcall | varchar(20) | YES  |     | NULL    |       |
+| solvedate  | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> describe customer;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| customerid | varchar(20) | NO   | PRI | NULL    |       |
+| cname      | varchar(30) | YES  |     | NULL    |       |
+| address    | varchar(30) | YES  |     | NULL    |       |
+| phone      | varchar(20) | YES  |     | NULL    |       |
+| email      | varchar(20) | YES  |     | NULL    |       |
+| productid  | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> describe engineer;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| engid         | varchar(20) | NO   | PRI | NULL    |       |
+| ename         | varchar(20) | YES  |     | NULL    |       |
+| address       | varchar(30) | YES  |     | NULL    |       |
+| phone         | varchar(20) | YES  |     | NULL    |       |
+| email         | varchar(20) | YES  |     | NULL    |       |
+| producttypeid | varchar(20) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> describe feedback;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| callno | varchar(20) | YES  |     | NULL    |       |
+| callid | varchar(20) | YES  |     | NULL    |       |
+| engid  | varchar(20) | YES  |     | NULL    |       |
+| rating | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> describe product;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| productid     | varchar(20) | NO   | PRI | NULL    |       |
+| pname         | varchar(20) | YES  |     | NULL    |       |
+| producttypeid | varchar(20) | YES  |     | NULL    |       |
+| warrantydays  | varchar(20) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> describe producttype;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| producttypeid | varchar(20) | NO   | PRI | NULL    |       |
+| typename      | varchar(20) | YES  |     | NULL    |       |
+| description   | varchar(50) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> describe servicecentre;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| centreid | varchar(20) | NO   | PRI | NULL    |       |
+| cname    | varchar(30) | YES  |     | NULL    |       |
+| address  | varchar(30) | YES  |     | NULL    |       |
+| phone    | varchar(20) | YES  |     | NULL    |       |
+| email    | varchar(30) | YES  |     | NULL    |       |
+| regno    | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> describe servicetype;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| serviceid     | varchar(20)   | NO   | PRI | NULL    |       |
+| productid     | varchar(20)   | YES  |     | NULL    |       |
+| producttypeid | varchar(20)   | YES  |     | NULL    |       |
+| sname         | varchar(20)   | YES  |     | NULL    |       |
+| cost          | decimal(10,0) | YES  |     | NULL    |       |
+| daystosolve   | varchar(20)   | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> describe staff;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| staffid | varchar(20) | NO   | PRI | NULL    |       |
+| sname   | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| phone   | varchar(20) | YES  |     | NULL    |       |
+| email   | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql>
